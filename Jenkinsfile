@@ -58,7 +58,7 @@ pipeline {
                 }
              }        
         }
-        stage('checkout github') {
+        stage('checkout github2') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [],
                 userRemoteConfigs: [[credentialsId: GITCREDENTIAL, url: GITDEPLOY]]])
