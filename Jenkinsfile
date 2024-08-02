@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    envirionment {
+    environment {
         GITNAME = 'HyunmoBae'
         GITMAIL = 'tsi0520@naver.com'
         GITWEBADD = 'https://github.com/HyunmoBae/fast-code.git'
