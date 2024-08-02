@@ -75,14 +75,13 @@ pipeline {
         stage('EKS manifest file update') {
             steps {
                 git credentialsId: GITCREDENTIAL, url: GITDEPLOY, branch: 'main'
-                sh "git config --global user.email ${GITEMAIL}"
+                sh "git config --global user.email ${GITMAIL}"
                 sh "git config --global user.name ${GITNAME}"
                 sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' fast.yml"
 
                 sh "git add ."
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
             }
-            //test!
         }
     }
 }
