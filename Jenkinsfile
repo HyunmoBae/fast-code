@@ -81,8 +81,7 @@ pipeline {
 
                 sh "git add ."
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [],
-                userRemoteConfigs: [[credentialsId: GITCREDENTIAL, url: GITDEPLOY]]])
+                sh "git remote -v"
                 sh "git push origin main"
             }
             post {
