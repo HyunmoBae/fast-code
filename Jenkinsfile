@@ -30,7 +30,7 @@ pipeline {
         stage('docker image build') {
             steps {
                 sh "docker build -t ${DOCKERHUB}:${currentBuild.number} ."
-                sh "docker build -t ${DOCKERHUB2}:${currentBuild.number} -f ./nginxDocker"
+                sh "docker build -t ${DOCKERHUB2}:${currentBuild.number} -f nginxDocker ."
                 sh "docker build -t ${DOCKERHUB}:latest ."
             }
             post {
