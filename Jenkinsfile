@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     stages {
-        build('start') {
-            stops {
+        stage('start') {
+            steps {
                 sh "hello Jenkins"
             }
         }
