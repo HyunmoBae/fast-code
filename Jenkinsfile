@@ -80,7 +80,6 @@ pipeline {
                 sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' fast.yaml"
 
                 sh "git add ."
-                sh "echo git add complete"
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
                 sh "git push origin main"
             }
