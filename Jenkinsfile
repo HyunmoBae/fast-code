@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('start') {
+        build('start') {
             stops {
                 sh "hello Jenkins"
             }
