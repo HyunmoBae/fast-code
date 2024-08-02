@@ -83,7 +83,7 @@ pipeline {
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
                 sh "git push origin main"
             }
-             post {
+            post {
                 failure {
                     sh "echo manifest update failed"
                 }
@@ -92,6 +92,5 @@ pipeline {
                 }
             }
         }
-        //tsaa
     }
 }
