@@ -8,6 +8,7 @@ pipeline {
         GITSSHADD = 'git@github.com:HyunmoBae/deployment.git'
         GITCREDENTIAL = 'git_cre'
         DOCKERHUB = 'bhm99/fast'
+        DOCKERHUB2 = 'bhm99/nginx'
         DOCKERHUBCREDENTIAL = 'docker_cre'
     }
 
@@ -29,6 +30,7 @@ pipeline {
         stage('docker image build') {
             steps {
                 sh "docker build -t ${DOCKERHUB}:${currentBuild.number} ."
+                sh "docker build -t ${DOCKERHUB2}:${currentBuild.number} -f ./nginxDocker"
                 sh "docker build -t ${DOCKERHUB}:latest ."
             }
             post {
@@ -44,12 +46,14 @@ pipeline {
             steps {
                 withDockerRegistry(credentialsId: DOCKERHUBCREDENTIAL, url: '') {
                     sh "docker push ${DOCKERHUB}:${currentBuild.number}"
+                    sh "docker push ${DOCKERHUB2}:${currentBuild.number}"
                     sh "docker push ${DOCKERHUB}:latest"
                 }
             }
             post {
                 failure {
                     sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
+                    sh "docker image rm -f ${DOCKERHUB2}:${currentBuild.number}"
                     sh "docker image rm -f ${DOCKERHUB}:latest"
                     sh "echo push failed"
                 }
@@ -63,7 +67,7 @@ pipeline {
                 git credentialsId: GITCREDENTIAL, url: GITSSHADD, branch: 'main'
                 sh "git config --global user.email ${GITMAIL}"
                 sh "git config --global user.name ${GITNAME}"
-                sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' fast.yaml"
+                sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB2}:${currentBuild.number}@g' fast.yaml"
 
                 sh "git add ."
                 sh "git branch -M main"
