@@ -4,6 +4,7 @@ pipeline {
         GITNAME = 'HyunmoBae'
         GITMAIL = 'tsi0520@naver.com'
         GITWEBADD = 'https://github.com/HyunmoBae/fast-code.git'
+        GITDEPLOY = 'https://github.com/HyunmoBae/deployment.git'
         GITSSHADD = 'git@github.com:HyunmoBae/fast-code.git'
         GITCREDENTIAL = 'git_cre'
         DOCKERHUB = 'bhm99/fast'
@@ -58,6 +59,19 @@ pipeline {
              }        
         }
 
+        steps {
+            checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [],
+            userRemoteConfigs: [[credentialsId: GITCREDENTIAL, url: GITDEPLOY]]])
+        }
+        post {
+            failure {
+                sh "echo failed"
+            }
+            success {
+                sh "echo success"
+            }
+        }
+        
         stage('EKS manifest file update') {
             steps {
                 git credentialsId: GITCREDENTIAL, url: GITSSHADD, branch: 'main'
