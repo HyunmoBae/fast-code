@@ -58,22 +58,11 @@ pipeline {
                 }
              }        
         }
-        stage('checkout github2') {
+        stage('EKS manifest file update') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [],
                 userRemoteConfigs: [[credentialsId: GITCREDENTIAL, url: GITDEPLOY]]])
-            }
-            post {
-                failure {
-                    sh "echo failed"
-                }
-                success {
-                    sh "echo success"
-                }
-            }
-        }
-        stage('EKS manifest file update') {
-            steps {
+
                 git credentialsId: GITCREDENTIAL, url: GITDEPLOY, branch: 'main'
                 sh "git config --global user.email ${GITMAIL}"
                 sh "git config --global user.name ${GITNAME}"
@@ -81,7 +70,7 @@ pipeline {
 
                 sh "git add ."
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
-                sh "git push ${GITDEPLOY} main"
+                sh "git push origin main"
             }
             post {
                 failure {
