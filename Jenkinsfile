@@ -67,6 +67,7 @@ pipeline {
 
                 sh "git add ."
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
+            }
         }
     }
 }
