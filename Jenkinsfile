@@ -58,20 +58,20 @@ pipeline {
                 }
              }        
         }
-
-        steps {
-            checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [],
-            userRemoteConfigs: [[credentialsId: GITCREDENTIAL, url: GITDEPLOY]]])
-        }
-        post {
-            failure {
-                sh "echo failed"
+        stage('checkout github') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [],
+                userRemoteConfigs: [[credentialsId: GITCREDENTIAL, url: GITDEPLOY]]])
             }
-            success {
-                sh "echo success"
+            post {
+                failure {
+                    sh "echo failed"
+                }
+                success {
+                    sh "echo success"
+                }
             }
         }
-        
         stage('EKS manifest file update') {
             steps {
                 git credentialsId: GITCREDENTIAL, url: GITSSHADD, branch: 'main'
