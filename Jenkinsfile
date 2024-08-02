@@ -66,10 +66,8 @@ pipeline {
                 sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' fast.yml"
 
                 sh "git add ."
-                sh "git branch -M main"
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
-                sh "git remote remove origin"
-                sh "git remote add origin ${GITSSHADD}"            }
+            }
         }
     }
 }
