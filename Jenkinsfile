@@ -81,8 +81,7 @@ pipeline {
 
                 sh "git add ."
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
-                sh "git remote -v"
-                sh "git push origin main"
+                sh "git push ${GITDEPLOY} main"
             }
             post {
                 failure {
