@@ -66,7 +66,10 @@ pipeline {
                 sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' fast.yaml"
 
                 sh "git add ."
+                sh "git branch -M main"
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
+                sh "git remote remove origin"
+                sh "git remote add origin ${GITSSHADD}"
                 sh "git push origin main"
             }
             post {
