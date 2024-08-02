@@ -7,9 +7,9 @@ spec:
   selector:
     app: fast
   ports:
-  - nodePort: 31000
-    port: 8000
-    targetPort: 8000
+    - nodePort: 31000
+      port: 8000
+      targetPort: 8000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -27,5 +27,5 @@ spec:
         app: fast
     spec:
       containers:
-      - name: fast-con
-        image: 029290955601.dkr.ecr.ap-northeast-2.amazonaws.com/fast:10
+        - name: fast-con
+          image: bhm99/fast:latest
