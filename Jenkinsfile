@@ -48,12 +48,14 @@ pipeline {
             }
             post {
                 failure {
-                    sh "echo failed"
+                    sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
+                    sh "docker image rm -f ${DOCKERHUB}:latest"
+                    sh "echo push failed"
                 }
                 success {
-                    sh "echo success"
+                    sh "echo push success"
                 }
-            }
+             }        
         }
     }
 }
