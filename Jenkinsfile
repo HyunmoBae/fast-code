@@ -65,6 +65,7 @@ pipeline {
                 sh "git config --global user.name ${GITNAME}"
                 sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' fast.yaml"
 
+
                 sh "git add ."
                 sh "git branch -M main"
                 sh "git commit -m 'fixed tag ${currentBuild.number}'"
