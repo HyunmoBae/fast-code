@@ -60,10 +60,7 @@ pipeline {
         }
         stage('EKS manifest file update') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [],
-                userRemoteConfigs: [[credentialsId: GITCREDENTIAL, url: GITDEPLOY]]])
-
-                git credentialsId: GITCREDENTIAL, url: GITDEPLOY, branch: 'main'
+                git credentialsId: GITCREDENTIAL, url: GITSSHADD, branch: 'main'
                 sh "git config --global user.email ${GITMAIL}"
                 sh "git config --global user.name ${GITNAME}"
                 sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' fast.yaml"
